@@ -1,0 +1,10 @@
+
+.array-bar {
+    display: inline-block;
+    background: #DCDADA;
+    width: 2px;
+    margin: 0 1px;
+}
+.container button {
+    /*#display:flex;*/
+}
