@@ -41,6 +41,7 @@ export default class SortingVisualizer extends React.Component {
         this.setState({array: array, animationTimeouts: []});
     }
 
+    // TODO disable the mergesort button once its finished
     mergeSort() {
         const copyArray = this.state.array.slice();
         const animations = getMergeSortAnimations(copyArray);
@@ -76,7 +77,6 @@ export default class SortingVisualizer extends React.Component {
                     console.log(`Animation Error: Unknown cmd: ${animation.cmd}`)
             }
         }
-        this.setState({array: copyArray})
     }
 
     render() {
