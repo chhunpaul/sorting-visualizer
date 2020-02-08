@@ -4,7 +4,7 @@ import './sortingVisualizer.css'
 import {getMergeSortAnimations} from '../sortingAlgorithms/sortingAlgorithms';
 
 // TODO make these an options on the page
-const ANIMATION_SPEED_MS = 10;
+const ANIMATION_SPEED_MS = 5;
 const PRIMARY_COLOR = '#DCDADA';
 const SORTED_COLOR = 'turquoise';
 
@@ -28,7 +28,7 @@ export default class SortingVisualizer extends React.Component {
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
         }
         const array = [];
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 30; i++) {
             let min = 5;
             let max = 500;
             let randNum = Math.floor(Math.random() * (max - min + 1) + min);
@@ -42,7 +42,8 @@ export default class SortingVisualizer extends React.Component {
     }
 
     mergeSort() {
-        const animations = getMergeSortAnimations(this.state.array.slice());
+        const copyArray = this.state.array.slice();
+        const animations = getMergeSortAnimations(copyArray);
         const arrayBars = document.getElementsByClassName('array-bar');
         const animationTimeouts = this.state.animationTimeouts;
         let animationTimeout = 0;
@@ -75,6 +76,7 @@ export default class SortingVisualizer extends React.Component {
                     console.log(`Animation Error: Unknown cmd: ${animation.cmd}`)
             }
         }
+        this.setState({array: copyArray})
     }
 
     render() {
