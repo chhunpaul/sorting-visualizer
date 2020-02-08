@@ -1,15 +1,17 @@
 import React from 'react';
 import './sortingVisualizer.css'
 
-// import * as sortingAlgorithms from '../sortingAlgorithms/sortingAlgorithms';
-import Algorithms from '../sortingAlgorithms/sortingAlgorithms'
+import {getMergeSortAnimations} from '../sortingAlgorithms/sortingAlgorithms';
+
+// TODO make these an options on the page
+const ANIMATION_SPEED_MS = 5;
+const PRIMARY_COLOR = 'turquoise';
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             array: [],
-            alg: new Algorithms(),
         }
     }
 
@@ -29,26 +31,32 @@ export default class SortingVisualizer extends React.Component {
     }
 
     mergeSort() {
-        const jsSortedArray = this.state.array.slice().sort((a, b) => a - b);
-        Algorithms.mergeSort(this.state.array);
-        console.log(arraysAreEqual(jsSortedArray, this.state.array))
-
-        // TODO make some kind of animation for the visualization portion
+        const animations = getMergeSortAnimations(this.state.array);
         const arrayBars = document.getElementsByClassName('array-bar');
-        for (let i = 0; i < this.state.array.length; i++) {
-            let bar = arrayBars[i];
-            bar.style.height = `${this.state.array[i]}px`
+        for (let i = 0; i < animations.length; i++) {
+            const animation = animations[i];
+            switch (animation.cmd) {
+                case "highlight":
+                    const [barOneIdx, barTwoIdx] = animation.indexes;
+                    const barOneStyle = arrayBars[barOneIdx].style;
+                    const barTwoStyle = arrayBars[barTwoIdx].style;
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = PRIMARY_COLOR;
+                        barTwoStyle.backgroundColor = PRIMARY_COLOR;
+                    }, i * ANIMATION_SPEED_MS);
+                    break;
+                case "resize":
+                    setTimeout(() => {
+                        const [barOneIdx, newHeight] = animation.indexes;
+                        const barOneStyle = arrayBars[barOneIdx].style;
+                        barOneStyle.height = `${newHeight}px`;
+                    }, i * ANIMATION_SPEED_MS);
+                    break;
+                default:
+                    console.log(`Animation Error: Unknown cmd: ${animation.cmd}`)
+            }
         }
     }
-
-    // bubbleSort() {
-    // }
-    //
-    // heapSort() {
-    // }
-    //
-    // quickSort() {
-    // }
 
     render() {
         const {array} = this.state;
@@ -62,19 +70,7 @@ export default class SortingVisualizer extends React.Component {
                 </div>
                 <button onClick={() => this.resetArray()}>Reset</button>
                 <button onClick={() => this.mergeSort()}>Merge Sort</button>
-                {/*<button onClick={() => this.quickSort()}>Quick Sort</button>*/}
-                {/*<button onClick={() => this.bubbleSort()}>Bubble Sort</button>*/}
-                {/*<button onClick={() => this.heapSort()}>Heap Sort</button>*/}
             </>
         )
     }
-}
-
-// Test for sorting
-function arraysAreEqual(arrayOne, arrayTwo) {
-    if (arrayOne.length !== arrayTwo.length) return false;
-    for (let i = 0; i < arrayOne.length; i++) {
-        if (arrayOne[i] !== arrayTwo[i]) return false;
-    }
-    return true;
 }
