@@ -12,33 +12,51 @@ export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            arraySize: 300,
             array: [],
             animationTimeouts: [],
-        }
+        };
+        this.onSizeChange = this.onSizeChange.bind(this);
     }
 
     componentDidMount() {
         this.resetArray()
     }
 
-    resetArray() {
+    cancel() {
         const arrayBars = document.getElementsByClassName('array-bar');
         // Reset the colors in case it was sorted previously.
         for (let i = 0; i < arrayBars.length; i++) {
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
         }
+        const animationTimeouts = this.state.animationTimeouts;
+        for (let i=0; i<animationTimeouts.length; i++) {
+            clearTimeout(animationTimeouts[i]);
+        }
+        this.setState({animationTimeouts: []});
+    }
+
+    onSizeChange(e) {
+        this.cancel();
+        this.updateSize(e.target.value);
+        this.setState({arraySize: e.target.value})
+    }
+    updateSize(arraySize) {
+        debugger;
         const array = [];
-        for (let i = 0; i < 30; i++) {
+        debugger;
+        for (let i = 0; i < arraySize; i++) {
             let min = 5;
             let max = 500;
             let randNum = Math.floor(Math.random() * (max - min + 1) + min);
             array.push(randNum)
         }
-        const animationTimeouts = this.state.animationTimeouts;
-        for (let i=0; i<animationTimeouts.length; i++) {
-            clearTimeout(animationTimeouts[i]);
-        }
-        this.setState({array: array, animationTimeouts: []});
+        this.setState({array: array, arraySize: arraySize});
+    }
+
+    resetArray() {
+        this.cancel();
+        this.updateSize(this.state.arraySize);
     }
 
     // TODO disable the mergesort button once its finished
@@ -83,6 +101,8 @@ export default class SortingVisualizer extends React.Component {
         const {array} = this.state;
         return (
             <>
+                <label>Size</label>
+                <input onChange={this.onSizeChange}/>
                 <div className="container">
                     {array.map((value, idx) =>
                         <div className="array-bar" style={{height: `${value}px`}} key={idx}>
