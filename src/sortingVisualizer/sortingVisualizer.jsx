@@ -4,14 +4,16 @@ import './sortingVisualizer.css'
 import {getMergeSortAnimations} from '../sortingAlgorithms/sortingAlgorithms';
 
 // TODO make these an options on the page
-const ANIMATION_SPEED_MS = 5;
-const PRIMARY_COLOR = 'turquoise';
+const ANIMATION_SPEED_MS = 10;
+const PRIMARY_COLOR = '#DCDADA';
+const SORTED_COLOR = 'turquoise';
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             array: [],
+            animationTimeouts: [],
         }
     }
 
@@ -20,37 +22,54 @@ export default class SortingVisualizer extends React.Component {
     }
 
     resetArray() {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        // Reset the colors in case it was sorted previously.
+        for (let i = 0; i < arrayBars.length; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
         const array = [];
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 300; i++) {
             let min = 5;
             let max = 500;
             let randNum = Math.floor(Math.random() * (max - min + 1) + min);
             array.push(randNum)
         }
-        this.setState({array})
+        const animationTimeouts = this.state.animationTimeouts;
+        for (let i=0; i<animationTimeouts.length; i++) {
+            clearTimeout(animationTimeouts[i]);
+        }
+        this.setState({array: array, animationTimeouts: []});
     }
 
     mergeSort() {
-        const animations = getMergeSortAnimations(this.state.array);
+        const animations = getMergeSortAnimations(this.state.array.slice());
         const arrayBars = document.getElementsByClassName('array-bar');
+        const animationTimeouts = this.state.animationTimeouts;
+        let animationTimeout = 0;
         for (let i = 0; i < animations.length; i++) {
+            // debugger;
             const animation = animations[i];
             switch (animation.cmd) {
                 case "highlight":
                     const [barOneIdx, barTwoIdx] = animation.indexes;
                     const barOneStyle = arrayBars[barOneIdx].style;
                     const barTwoStyle = arrayBars[barTwoIdx].style;
-                    setTimeout(() => {
-                        barOneStyle.backgroundColor = PRIMARY_COLOR;
-                        barTwoStyle.backgroundColor = PRIMARY_COLOR;
+
+                    animationTimeout = setTimeout(() => {
+                        barOneStyle.backgroundColor = SORTED_COLOR;
+                        barTwoStyle.backgroundColor = SORTED_COLOR;
                     }, i * ANIMATION_SPEED_MS);
+                    animationTimeouts.push(animationTimeout);
+                    this.setState({animationTimeouts: animationTimeouts});
                     break;
                 case "resize":
-                    setTimeout(() => {
+                    animationTimeout = setTimeout(() => {
                         const [barOneIdx, newHeight] = animation.indexes;
                         const barOneStyle = arrayBars[barOneIdx].style;
                         barOneStyle.height = `${newHeight}px`;
                     }, i * ANIMATION_SPEED_MS);
+                    animationTimeouts.push(animationTimeout);
+                    this.setState({animationTimeouts: animationTimeouts});
                     break;
                 default:
                     console.log(`Animation Error: Unknown cmd: ${animation.cmd}`)
