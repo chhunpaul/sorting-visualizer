@@ -90,8 +90,3 @@ export function getInsertionSortAnimations(array) {
     }
     return animations
 }
-
-export function getQuickSortAnimations(array) {
-    const animations = [];
-    return animations
-}

@@ -156,8 +156,8 @@ export class InsertionSortVisualizer extends SortingVisualizer {
     }
 }
 
-export class QuickSortVisualizer extends SortingVisualizer {
-    render() {
-        return <SortingVisualizer name="Quick Sort" getAnimations={getQuickSortAnimations} />
-    }
-}
+// export class QuickSortVisualizer extends SortingVisualizer {
+//     render() {
+//         return <SortingVisualizer name="Quick Sort" getAnimations={getQuickSortAnimations} />
+//     }
+// }

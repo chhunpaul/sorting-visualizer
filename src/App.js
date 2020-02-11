@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
 
 import Navigation from './components/Navigation';
@@ -7,13 +7,13 @@ import {
     MergeSortVisualizer,
     BubbleSortVisualizer,
     InsertionSortVisualizer,
-    QuickSortVisualizer
+    // QuickSortVisualizer
 } from "./sortingVisualizer/sortingVisualizer";
 
 class App extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter basename='/'>
                 <div className="App">
                     <Navigation/>
                     <Switch>
@@ -21,11 +21,11 @@ class App extends Component {
                         <Route exact path="/merge-sort" component={MergeSortVisualizer}/>
                         <Route exact path="/bubble-sort" component={BubbleSortVisualizer}/>
                         <Route exact path="/insertion-sort" component={InsertionSortVisualizer}/>
-                        <Route exact path="/quick-sort" component={QuickSortVisualizer}/>
+                        {/*<Route exact path="/quick-sort" component={QuickSortVisualizer}/>*/}
                         <Route component={Error}/>
                     </Switch>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
