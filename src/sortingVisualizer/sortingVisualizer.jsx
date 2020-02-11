@@ -4,7 +4,7 @@ import './sortingVisualizer.css'
 import {getMergeSortAnimations} from '../sortingAlgorithms/sortingAlgorithms';
 
 // TODO make these an options on the page
-const ANIMATION_SPEED_MS = 10;
+const ANIMATION_SPEED_MS = 5;
 const PRIMARY_COLOR = '#DCDADA';
 const SORTED_COLOR = '#40e0d0';
 

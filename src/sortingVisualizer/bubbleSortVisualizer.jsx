@@ -8,7 +8,6 @@ export default class BubbleSortVisualizer extends SortingVisualizer {
         const arrayBars = document.getElementsByClassName("array-bar");
         const copyArray = this.state.array.slice();
         const animations = getBubbleSortAnimations(copyArray);
-        console.log(animations);
         const animationTimeouts = this.state.animationTimeouts;
         let animationTimeout = 0;
         for (let i = 0; i < animations.length; i++) {
@@ -47,7 +46,7 @@ export default class BubbleSortVisualizer extends SortingVisualizer {
         return (
             <div className="SortingVisualizer BubbleSort">
                 <h1>Bubble Sort</h1>
-                <div className="visualizer-container">
+                <div className="visualizer-container" style={{width: `${array.length * 4}px`}}>
                     <div className="bar-container">
                     {array.map((value, idx) =>
                         <div className="array-bar" style={{height: `${value}px`}} key={idx}>
