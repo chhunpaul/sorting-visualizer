@@ -8,6 +8,7 @@ const Navigation = () => {
         <div className="Nav">
             <NavLink className="NavLink" to="/merge-sort">Merge Sort</NavLink>
             <NavLink className="NavLink" to="/bubble-sort">Bubble Sort</NavLink>
+            <NavLink className="NavLink" to="/insertion-sort">Insertion Sort</NavLink>
         </div>
     );
 };

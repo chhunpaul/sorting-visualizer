@@ -5,6 +5,7 @@ import './App.css';
 import Navigation from './components/Navigation';
 import MergeSortVisualizer from "./sortingVisualizer/mergeSortVisualizer";
 import BubbleSortVisualizer from "./sortingVisualizer/bubbleSortVisualizer";
+import InsertionSortVisualizer from "./sortingVisualizer/InsertionSortVisualizer";
 
 class App extends Component {
     render() {
@@ -17,6 +18,7 @@ class App extends Component {
                         <Route exact path="/" component={MergeSortVisualizer}/>
                         <Route exact path="/merge-sort" component={MergeSortVisualizer}/>
                         <Route exact path="/bubble-sort" component={BubbleSortVisualizer}/>
+                        <Route exact path="/insertion-sort" component={InsertionSortVisualizer}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

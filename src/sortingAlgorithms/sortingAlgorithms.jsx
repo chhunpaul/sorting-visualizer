@@ -72,3 +72,22 @@ export function getBubbleSortAnimations(array) {
     } while (swapped);
     return animations;
 }
+
+export function getInsertionSortAnimations(array) {
+    const animations = [];
+    for (let i=1; i<array.length; i++) {
+        const key = array[i];
+        let j = i-1;
+        while (j >= 0 && key < array[j]) {
+            animations.push(createAnimation("highlight", [i, j]));
+            array[j + 1] = array[j];
+            animations.push(createAnimation("resize", [j+ 1, array[j]]));
+            animations.push(createAnimation("un-highlight", [i, j]));
+            j--
+        }
+        animations.push(createAnimation("resize", [j+ 1, key]));
+        array[j + 1] = key
+    }
+    // console.log(array);
+    return animations
+}

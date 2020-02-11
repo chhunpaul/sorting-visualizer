@@ -8,7 +8,7 @@ export default class BubbleSortVisualizer extends SortingVisualizer {
     render() {
         const {array} = this.state;
         return (
-            <div className="SortingVisualizer BubbleSort">
+            <div className="SortingVisualizer">
                 <h1>Bubble Sort</h1>
                 <div className="visualizer-container" style={{width: `${array.length * 4}px`}}>
                     <div className="bar-container">

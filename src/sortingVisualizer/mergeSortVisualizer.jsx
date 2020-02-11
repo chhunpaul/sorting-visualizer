@@ -9,7 +9,7 @@ export default class MergeSortVisualizer extends SortingVisualizer {
     render() {
         const {array} = this.state;
         return (
-            <div className="SortingVisualizer MergeSort">
+            <div className="SortingVisualizer">
                 <h1>Merge Sort</h1>
                 <div className="visualizer-container" style={{width: `${array.length * 4}px`}}>
                     <div className="bar-container">
