@@ -2,7 +2,18 @@
 .SortingVisualizer label {
     color: #daedf0;
 }
+
+.visualizer-container {
+    height: 305px;
+    margin-top: 50px;
+    position: relative;
+}
+.bar-container {
+    position: absolute;
+    bottom: 0;
+}
 .array-bar {
+    bottom: 0;
     display: inline-block;
     background: #DCDADA;
     width: 2px;

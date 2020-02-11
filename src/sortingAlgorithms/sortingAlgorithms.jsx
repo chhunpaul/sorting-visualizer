@@ -1,3 +1,10 @@
+function createAnimation(type, indexes) {
+    return {
+        cmd: type,
+        indexes: indexes,
+    }
+}
+
 export function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) {
@@ -9,23 +16,23 @@ export function getMergeSortAnimations(array) {
         let i = startIdx;
         let j = middleIdx + 1;
         while (i <= middleIdx && j <= endIdx) {
-            animations.push({cmd: "highlight", indexes: [i, j]});
+            animations.push(createAnimation("highlight", [i, j]));
             if (arrayCopy[i] <= arrayCopy[j]) {
-                animations.push({cmd: 'resize', indexes: [k, arrayCopy[i]]});
+                animations.push(createAnimation('resize', [k, arrayCopy[i]]));
                 array[k++] = arrayCopy[i++];
             } else {
-                animations.push({cmd: 'resize', indexes: [k, arrayCopy[j]]});
+                animations.push(createAnimation('resize', [k, arrayCopy[j]]));
                 array[k++] = arrayCopy[j++];
             }
         }
         while (i <= middleIdx) {
-            animations.push({cmd: "highlight", indexes: [i, i]});
-            animations.push({cmd: 'resize', indexes: [k, arrayCopy[i]]});
+            animations.push(createAnimation("highlight", [i, i]));
+            animations.push(createAnimation("resize", [k, arrayCopy[i]]));
             array[k++] = arrayCopy[i++];
         }
         while (j <= endIdx) {
-            animations.push({cmd: "highlight", indexes: [j, j]});
-            animations.push({cmd: 'resize', indexes: [k, arrayCopy[j]]});
+            animations.push(createAnimation("highlight", [j, j]));
+            animations.push(createAnimation("resize", [k, arrayCopy[j]]));
             array[k++] = arrayCopy[j++];
         }
     };
@@ -39,5 +46,27 @@ export function getMergeSortAnimations(array) {
     };
     const arrayCopy = array.slice();
     _mergeSort(array, 0, array.length - 1, arrayCopy, animations);
+    return animations;
+}
+
+
+export function getBubbleSortAnimations(array) {
+    const animations = [];
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] > array[i + 1]) {
+                animations.push(createAnimation("highlight", [i, i + 1]));
+                let tmp = array[i];
+                array[i] = array[i + 1];
+                animations.push(createAnimation("resize", [i, array[i + 1]]));
+                array[i + 1] = tmp;
+                animations.push(createAnimation("resize", [i + 1, tmp]));
+                swapped = true;
+                animations.push(createAnimation("un-highlight", [i, i + 1]));
+            }
+        }
+    } while (swapped);
     return animations;
 }

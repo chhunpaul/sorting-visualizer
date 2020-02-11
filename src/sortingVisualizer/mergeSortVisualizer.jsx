@@ -19,7 +19,6 @@ export default class MergeSortVisualizer extends SortingVisualizer {
                     const [barOneIdx, barTwoIdx] = animation.indexes;
                     const barOneStyle = arrayBars[barOneIdx].style;
                     const barTwoStyle = arrayBars[barTwoIdx].style;
-
                     animationTimeout = setTimeout(() => {
                         barOneStyle.backgroundColor = this.state.sortedColor;
                         barTwoStyle.backgroundColor = this.state.sortedColor;
