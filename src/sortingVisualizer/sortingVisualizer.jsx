@@ -12,7 +12,7 @@ export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            arraySize: 100,
+            arraySize: 400,
             array: [],
             animationTimeouts: [],
             animationSpeedMS: ANIMATION_SPEED_MS,
@@ -48,8 +48,8 @@ export default class SortingVisualizer extends React.Component {
         // this.updateSize(e.target.value);
         let targetValue = e.target.value;
         // MAX is 500
-        if (targetValue > 500){
-            targetValue = 500;
+        if (targetValue > 400){
+            targetValue = 400;
         }
         // Min is 1
         if (targetValue < 30) {
