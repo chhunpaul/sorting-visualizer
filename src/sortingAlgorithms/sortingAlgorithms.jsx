@@ -19,22 +19,24 @@ export function getMergeSortAnimations(array) {
             animations.push(createAnimation("highlight", [i, j]));
             if (arrayCopy[i] <= arrayCopy[j]) {
                 animations.push(createAnimation('resize', [k, arrayCopy[i]]));
+                animations.push(createAnimation("un-highlight", [i, j]));
                 array[k++] = arrayCopy[i++];
             } else {
                 animations.push(createAnimation('resize', [k, arrayCopy[j]]));
+                animations.push(createAnimation("un-highlight", [i, j]));
                 array[k++] = arrayCopy[j++];
             }
         }
-        while (i <= middleIdx) {
-            animations.push(createAnimation("highlight", [i, i]));
-            animations.push(createAnimation("resize", [k, arrayCopy[i]]));
-            array[k++] = arrayCopy[i++];
-        }
-        while (j <= endIdx) {
-            animations.push(createAnimation("highlight", [j, j]));
-            animations.push(createAnimation("resize", [k, arrayCopy[j]]));
-            array[k++] = arrayCopy[j++];
-        }
+        const fillRemaining = (idxCounter, endIdx) => {
+            while (idxCounter <= endIdx) {
+                animations.push(createAnimation("highlight", [idxCounter, idxCounter]));
+                animations.push(createAnimation("resize", [k, arrayCopy[idxCounter]]));
+                animations.push(createAnimation("un-highlight", [idxCounter, idxCounter]));
+                array[k++] = arrayCopy[idxCounter++];
+            }
+        };
+        fillRemaining(i, middleIdx);
+        fillRemaining(j, endIdx);
     };
 
     const _mergeSort = (array, startIdx, endIdx, arrayCopy, animations) => {
