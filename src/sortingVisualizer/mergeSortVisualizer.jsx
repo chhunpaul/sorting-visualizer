@@ -46,11 +46,13 @@ export default class MergeSortVisualizer extends SortingVisualizer {
         return (
             <div className="SortingVisualizer MergeSort">
                 <h1>Merge Sort</h1>
-                <div>
-                    {array.map((value, idx) =>
-                        <div className="array-bar" style={{height: `${value}px`}} key={idx}>
-                        </div>
-                    )}
+                <div className="visualizer-container">
+                    <div className="bar-container">
+                        {array.map((value, idx) =>
+                            <div className="array-bar" style={{height: `${value}px`}} key={idx}>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <label>Size</label>
                 <input onChange={this.onSizeChange}/>
