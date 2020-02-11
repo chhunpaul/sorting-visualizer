@@ -88,6 +88,10 @@ export function getInsertionSortAnimations(array) {
         animations.push(createAnimation("resize", [j+ 1, key]));
         array[j + 1] = key
     }
-    // console.log(array);
+    return animations
+}
+
+export function getQuickSortAnimations(array) {
+    const animations = [];
     return animations
 }

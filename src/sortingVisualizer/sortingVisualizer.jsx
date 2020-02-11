@@ -1,12 +1,17 @@
 import React from 'react';
 import './sortingVisualizer.css'
-import {getBubbleSortAnimations} from "../sortingAlgorithms/sortingAlgorithms";
+import {
+    getBubbleSortAnimations,
+    getInsertionSortAnimations,
+    getMergeSortAnimations,
+    getQuickSortAnimations
+} from "../sortingAlgorithms/sortingAlgorithms";
 
 const ANIMATION_SPEED_MS = 5;
 const PRIMARY_COLOR = '#DCDADA';
 const SORTED_COLOR = '#40e0d0';
 
-export default class SortingVisualizer extends React.Component {
+class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +21,7 @@ export default class SortingVisualizer extends React.Component {
             animationSpeedMS: ANIMATION_SPEED_MS,
             primaryColor: PRIMARY_COLOR,
             sortedColor: SORTED_COLOR,
+            getAnimations: this.props.getAnimations,
         };
         this.onSizeChange = this.onSizeChange.bind(this);
     }
@@ -28,10 +34,10 @@ export default class SortingVisualizer extends React.Component {
         this.resetArray()
     }
 
-    sort(getAnimations) {
+    sort() {
         const arrayBars = document.getElementsByClassName("array-bar");
         const copyArray = this.state.array.slice();
-        const animations = getAnimations(copyArray);
+        const animations = this.state.getAnimations(copyArray);
         const animationTimeouts = this.state.animationTimeouts;
         let animationTimeout = 0;
         for (let i = 0; i < animations.length; i++) {
@@ -108,5 +114,50 @@ export default class SortingVisualizer extends React.Component {
     resetArray() {
         this.cancel();
         this.updateSize(this.state.arraySize);
+    }
+
+    render() {
+        const {array} = this.state;
+        return (
+            <div className="SortingVisualizer">
+                <h1>{this.props.name}</h1>
+                <div className="visualizer-container" style={{width: `${array.length * 4}px`}}>
+                    <div className="bar-container">
+                        {array.map((value, idx) =>
+                            <div className="array-bar" style={{height: `${value}px`}} key={idx}>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <label>Size</label>
+                <input type="number" onChange={this.onSizeChange}/>
+                <button onClick={() => this.resetArray()}>Reset</button>
+                <button onClick={() => this.sort()}>Sort</button>
+            </div>
+        )
+    }
+}
+
+export class MergeSortVisualizer extends SortingVisualizer {
+    render() {
+        return <SortingVisualizer name="Merge Sort" getAnimations={getMergeSortAnimations} />
+    }
+}
+
+export class BubbleSortVisualizer extends SortingVisualizer {
+    render() {
+        return <SortingVisualizer name="Bubble Sort" getAnimations={getBubbleSortAnimations} />
+    }
+}
+
+export class InsertionSortVisualizer extends SortingVisualizer {
+    render() {
+        return <SortingVisualizer name="Insertion Sort" getAnimations={getInsertionSortAnimations} />
+    }
+}
+
+export class QuickSortVisualizer extends SortingVisualizer {
+    render() {
+        return <SortingVisualizer name="Quick Sort" getAnimations={getQuickSortAnimations} />
     }
 }
