@@ -1,6 +1,6 @@
 {
   "name": "sorting-visualizer",
-  "homepage": "http://chhunpaul.github.io/sorting-visualizer",
+  "homepage": "http://chhunpaul.github.io/sorting-visualizer/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

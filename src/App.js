@@ -14,9 +14,9 @@ class App extends Component {
                     <Navigation />
                     <Switch>
                         {/* Setting default to merge sort TODO change it to somethign else later*/}
-                        <Route path="/" component={MergeSortVisualizer} exact/>
-                        <Route path="/merge-sort" component={MergeSortVisualizer}/>
-                        <Route path="/bubble-sort" component={BubbleSortVisualizer}/>
+                        <Route exact path="/" component={MergeSortVisualizer}/>
+                        <Route exact path="/merge-sort" component={MergeSortVisualizer}/>
+                        <Route exact path="/bubble-sort" component={BubbleSortVisualizer}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>
