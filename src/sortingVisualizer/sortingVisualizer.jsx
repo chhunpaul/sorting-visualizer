@@ -15,11 +15,18 @@ export default class SortingVisualizer extends React.Component {
             arraySize: 300,
             array: [],
             animationTimeouts: [],
+            animationSpeedMS: ANIMATION_SPEED_MS,
+            primaryColor: PRIMARY_COLOR,
+            sortedColor: SORTED_COLOR,
         };
         this.onSizeChange = this.onSizeChange.bind(this);
     }
 
     componentDidMount() {
+        this.resetArray()
+    }
+
+    componentWillUnmount() {
         this.resetArray()
     }
 
@@ -42,9 +49,7 @@ export default class SortingVisualizer extends React.Component {
         this.setState({arraySize: e.target.value})
     }
     updateSize(arraySize) {
-        debugger;
         const array = [];
-        debugger;
         for (let i = 0; i < arraySize; i++) {
             let min = 5;
             let max = 500;

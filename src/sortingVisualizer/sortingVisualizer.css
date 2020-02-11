@@ -1,4 +1,7 @@
-
+.SortingVisualizer h1,
+.SortingVisualizer label {
+    color: #daedf0;
+}
 .array-bar {
     display: inline-block;
     background: #DCDADA;
