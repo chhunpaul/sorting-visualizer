@@ -45,7 +45,18 @@ export default class SortingVisualizer extends React.Component {
 
     onSizeChange(e) {
         this.cancel();
-        this.updateSize(e.target.value);
+        // this.updateSize(e.target.value);
+        let targetValue = e.target.value;
+        // MAX is 500
+        if (targetValue > 500){
+            targetValue = 500;
+        }
+        // Min is 1
+        if (targetValue < 30) {
+            targetValue = 30;
+        }
+        this.updateSize(targetValue);
+        e.target.value = targetValue;
         this.setState({arraySize: e.target.value})
     }
     updateSize(arraySize) {
