@@ -5,6 +5,12 @@ function createAnimation(type, indexes) {
     }
 }
 
+function swap(items, i, j) {
+    const temp = items[i];
+    items[i] = items[j];
+    items[j] = temp;
+}
+
 export function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) {
@@ -112,9 +118,7 @@ export function getQuickSortAnimations(array) {
                 j--;
             }
             if (i <= j) {
-                const temp = items[i];
-                items[i] = items[j];
-                items[j] = temp;
+                swap(array, i, j);
                 animations.push(createAnimation("highlight", [i, j]));
                 animations.push(createAnimation("resize", [i, items[i]]));
                 animations.push(createAnimation("resize", [j, items[j]]));
@@ -140,5 +144,53 @@ export function getQuickSortAnimations(array) {
         }
     };
     quickSort(array, 0, array.length-1);
+    return animations
+}
+
+export function getHeapSortAnimations(array) {
+    const animations = [];
+    const heapify = (items, n, i) => {
+        let largest = i,
+            l = 2 * i + 1,
+            r = 2 * i + 2;
+
+        if (l < n && items[i] < items[l]) {
+            animations.push(createAnimation("highlight", [i, l]));
+            animations.push(createAnimation("un-highlight", [i, l]));
+            largest = l
+        }
+
+        if (r < n && items[largest] < items[r]) {
+            animations.push(createAnimation("highlight", [largest, r]));
+            animations.push(createAnimation("un-highlight", [largest, r]));
+            largest = r
+        }
+        if (largest !== i) {
+            swap(items, i, largest);
+            animations.push(createAnimation("highlight", [largest, i]));
+            animations.push(createAnimation("resize", [i, items[i]]));
+            animations.push(createAnimation("resize", [largest, items[largest]]));
+            animations.push(createAnimation("un-highlight", [largest, i]));
+            heapify(items, n, largest);
+        }
+    };
+
+    const heapSort = (items) => {
+        let n = items.length;
+        for (let i = Math.floor(n / 2); i >= 0; i -= 1)      {
+            heapify(items, n, i);
+        }
+
+        for (let i = items.length - 1; i > 0; i--) {
+            swap(items, 0, i);
+            animations.push(createAnimation("highlight", [i, 0]));
+            animations.push(createAnimation("resize", [i, items[i]]));
+            animations.push(createAnimation("resize", [0, items[0]]));
+            animations.push(createAnimation("un-highlight", [i, 0]));
+            n--;
+            heapify(items, n,0);
+        }
+    };
+    heapSort(array);
     return animations
 }

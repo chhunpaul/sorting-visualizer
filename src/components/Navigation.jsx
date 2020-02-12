@@ -10,6 +10,7 @@ const Navigation = () => {
             <NavLink className="NavLink" to="/bubble-sort">Bubble Sort</NavLink>
             <NavLink className="NavLink" to="/insertion-sort">Insertion Sort</NavLink>
             <NavLink className="NavLink" to="/quick-sort">Quick Sort</NavLink>
+            <NavLink className="NavLink" to="/heap-sort">Heap Sort</NavLink>
         </div>
     );
 };
