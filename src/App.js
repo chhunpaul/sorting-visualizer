@@ -1,26 +1,33 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
 
 import Navigation from './components/Navigation';
-import MergeSortVisualizer from "./sortingVisualizer/mergeSortVisualizer";
-import BubbleSortVisualizer from "./sortingVisualizer/bubbleSortVisualizer";
+import {
+    MergeSortVisualizer,
+    BubbleSortVisualizer,
+    InsertionSortVisualizer,
+    QuickSortVisualizer,
+    HeapSortVisualizer,
+} from "./sortingVisualizer/sortingVisualizer";
 
 class App extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter basename='/'>
                 <div className="App">
-                    <Navigation />
+                    <Navigation/>
                     <Switch>
-                        {/* Setting default to merge sort TODO change it to somethign else later*/}
                         <Route exact path="/" component={MergeSortVisualizer}/>
                         <Route exact path="/merge-sort" component={MergeSortVisualizer}/>
                         <Route exact path="/bubble-sort" component={BubbleSortVisualizer}/>
+                        <Route exact path="/insertion-sort" component={InsertionSortVisualizer}/>
+                        <Route exact path="/quick-sort" component={QuickSortVisualizer}/>
+                        <Route exact path="/heap-sort" component={HeapSortVisualizer}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
