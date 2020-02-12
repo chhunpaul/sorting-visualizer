@@ -22,6 +22,7 @@ class SortingVisualizer extends React.Component {
             primaryColor: PRIMARY_COLOR,
             sortedColor: SORTED_COLOR,
             getAnimations: this.props.getAnimations,
+            sorting: false,
         };
         this.onSizeChange = this.onSizeChange.bind(this);
     }
@@ -35,6 +36,7 @@ class SortingVisualizer extends React.Component {
     }
 
     sort() {
+        this.setState({sorting: true});
         const arrayBars = document.getElementsByClassName("array-bar");
         const copyArray = this.state.array.slice();
         const animations = this.state.getAnimations(copyArray);
@@ -112,6 +114,7 @@ class SortingVisualizer extends React.Component {
     resetArray() {
         this.cancel();
         this.updateSize(this.state.arraySize);
+        this.setState({sorting: false});
     }
 
     render() {
@@ -130,7 +133,7 @@ class SortingVisualizer extends React.Component {
                 <label>Size</label>
                 <input type="number" onChange={this.onSizeChange}/>
                 <button onClick={() => this.resetArray()}>Reset</button>
-                <button onClick={() => this.sort()}>Sort</button>
+                <button onClick={() => this.sort()} disabled={this.state.sorting}>Sort</button>
             </div>
         )
     }
