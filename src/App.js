@@ -7,7 +7,7 @@ import {
     MergeSortVisualizer,
     BubbleSortVisualizer,
     InsertionSortVisualizer,
-    // QuickSortVisualizer
+    QuickSortVisualizer
 } from "./sortingVisualizer/sortingVisualizer";
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
                         <Route exact path="/merge-sort" component={MergeSortVisualizer}/>
                         <Route exact path="/bubble-sort" component={BubbleSortVisualizer}/>
                         <Route exact path="/insertion-sort" component={InsertionSortVisualizer}/>
-                        {/*<Route exact path="/quick-sort" component={QuickSortVisualizer}/>*/}
+                        <Route exact path="/quick-sort" component={QuickSortVisualizer}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>

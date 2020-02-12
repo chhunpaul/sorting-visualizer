@@ -75,18 +75,70 @@ export function getBubbleSortAnimations(array) {
 
 export function getInsertionSortAnimations(array) {
     const animations = [];
-    for (let i=1; i<array.length; i++) {
+    for (let i = 1; i < array.length; i++) {
         const key = array[i];
-        let j = i-1;
+        let j = i - 1;
         while (j >= 0 && key < array[j]) {
             animations.push(createAnimation("highlight", [i, j]));
             array[j + 1] = array[j];
-            animations.push(createAnimation("resize", [j+ 1, array[j]]));
+            animations.push(createAnimation("resize", [j + 1, array[j]]));
             animations.push(createAnimation("un-highlight", [i, j]));
             j--
         }
-        animations.push(createAnimation("resize", [j+ 1, key]));
+        animations.push(createAnimation("resize", [j + 1, key]));
         array[j + 1] = key
     }
+    return animations
+}
+
+
+export function getQuickSortAnimations(array) {
+    const animations = [];
+    const partition = (items, left, right) => {
+        const pivotIndex = Math.floor((right + left) / 2);
+        const pivot = items[pivotIndex];
+        animations.push(createAnimation("highlight", [pivotIndex]));
+        let i = left,
+            j = right;
+        while (i <= j) {
+            while (items[i] < pivot) {
+                animations.push(createAnimation("highlight", [i]));
+                animations.push(createAnimation("un-highlight", [i]));
+                i++;
+            }
+            while (items[j] > pivot) {
+                animations.push(createAnimation("highlight", [j]));
+                animations.push(createAnimation("un-highlight", [j]));
+                j--;
+            }
+            if (i <= j) {
+                const temp = items[i];
+                items[i] = items[j];
+                items[j] = temp;
+                animations.push(createAnimation("highlight", [i, j]));
+                animations.push(createAnimation("resize", [i, items[i]]));
+                animations.push(createAnimation("resize", [j, items[j]]));
+                animations.push(createAnimation("un-highlight", [i, j]));
+                i++;
+                j--;
+            }
+        }
+        animations.push(createAnimation("un-highlight", [pivotIndex]));
+        return i;
+    };
+
+    const quickSort = (items, left, right) => {
+        let index;
+        if (items.length > 1) {
+            index = partition(items, left, right); //index returned from partition
+            if (left < index - 1) { //more elements on the left side of the pivot
+                quickSort(items, left, index - 1);
+            }
+            if (index < right) { //more elements on the right side of the pivot
+                quickSort(items, index, right);
+            }
+        }
+    };
+    quickSort(array, 0, array.length-1);
     return animations
 }
