@@ -130,11 +130,11 @@ export function getQuickSortAnimations(array) {
     const quickSort = (items, left, right) => {
         let index;
         if (items.length > 1) {
-            index = partition(items, left, right); //index returned from partition
-            if (left < index - 1) { //more elements on the left side of the pivot
+            index = partition(items, left, right);
+            if (left < index - 1) {
                 quickSort(items, left, index - 1);
             }
-            if (index < right) { //more elements on the right side of the pivot
+            if (index < right) {
                 quickSort(items, index, right);
             }
         }
