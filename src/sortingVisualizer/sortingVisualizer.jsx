@@ -14,8 +14,9 @@ const SORTED_COLOR = '#40e0d0';
 class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            arraySize: 400,
+            arraySize: 0,
             array: [],
             animationTimeouts: [],
             animationSpeedMS: ANIMATION_SPEED_MS,
@@ -24,11 +25,14 @@ class SortingVisualizer extends React.Component {
             getAnimations: this.props.getAnimations,
             sorting: false,
         };
-        this.onSizeChange = this.onSizeChange.bind(this);
+        window.addEventListener("resize", () => {
+            this.onSizeChange(window.innerWidth / 5);
+        });
     }
 
     componentDidMount() {
-        this.resetArray()
+        this.resetArray();
+        this.updateSize(window.innerWidth / 5)
     }
 
     componentWillUnmount() {
@@ -84,21 +88,10 @@ class SortingVisualizer extends React.Component {
         this.setState({animationTimeouts: []});
     }
 
-    onSizeChange(e) {
+    onSizeChange(size) {
         this.cancel();
-        // this.updateSize(e.target.value);
-        let targetValue = e.target.value;
-        // MAX is 500
-        if (targetValue > 400){
-            targetValue = 400;
-        }
-        // Min is 1
-        if (targetValue < 30) {
-            targetValue = 30;
-        }
-        this.updateSize(targetValue);
-        e.target.value = targetValue;
-        this.setState({arraySize: e.target.value})
+        this.updateSize(size);
+        this.setState({arraySize: size})
     }
     updateSize(arraySize) {
         const array = [];
@@ -130,8 +123,6 @@ class SortingVisualizer extends React.Component {
                         )}
                     </div>
                 </div>
-                <label>Size</label>
-                <input type="number" onChange={this.onSizeChange}/>
                 <button onClick={() => this.resetArray()}>Reset</button>
                 <button onClick={() => this.sort()} disabled={this.state.sorting}>Sort</button>
             </div>
